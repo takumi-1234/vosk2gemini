@@ -1,4 +1,5 @@
 from setuptools import find_packages, setup
+from vosk2cmd.config import NodeName
 
 package_name = 'vosk2cmd'
 
@@ -20,6 +21,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            f'{ NodeName } = vosk2cmd.main:main',
         ],
     },
 )
