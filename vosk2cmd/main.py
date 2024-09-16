@@ -51,7 +51,8 @@ class CustomNode(Node):
             self.publish_cmd(Command.GO_FORWARD)
         elif 'go backward' in msg:
             self.publish_cmd(Command.GO_BACKWARD)
-        else:
+        # 半角の空白で単語数の判別を実施しているので日本語の場合は変更の必要あり
+        elif msg.count(" ") > 5:
             # トピックから受け取ったメッセージを取得
             prompt = msg
             self.get_logger().info(f'Received message: "{prompt}"')
