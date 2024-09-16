@@ -6,6 +6,13 @@ from vosk2cmd.Command import Command
 from vosk2cmd.Logger import Logger
 from vosk2cmd.config import *
 
+import google.generativeai as genai
+import os
+
+# Google Generative AIの設定
+os.environ["API_KEY"] = 'AIzaSyA-U5pwi5Zu9p4qyk6hwBI3mzYsIA9WzIw'
+genai.configure(api_key=os.environ["API_KEY"])
+gemini_pro = genai.GenerativeModel("gemini-pro")
 
 class CustomNode(Node):
 
@@ -44,6 +51,17 @@ class CustomNode(Node):
             self.publish_cmd(Command.GO_FORWARD)
         elif 'go backward' in msg:
             self.publish_cmd(Command.GO_BACKWARD)
+        else:
+            # トピックから受け取ったメッセージを取得
+            prompt = msg
+            self.get_logger().info(f'Received message: "{prompt}"')
+
+            # Google Geminiにプロンプトとして送信
+            try:
+                response = gemini_pro.generate_content(prompt)
+                print("AI Response:", response.text)
+            except Exception as e:
+                print(f"Failed to get response from AI: {e}")
 
 
 def main(args=None):
