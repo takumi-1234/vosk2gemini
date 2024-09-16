@@ -1,6 +1,6 @@
 # vosk2cmd
 
-##setup
+## setup
 ```bash
 pip install pyttsx3
 ```
